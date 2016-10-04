@@ -8,8 +8,8 @@
 #
 
 redisio_install "redis-installation" do
-  version '3.2.4'
-  download_url 'http://download.redis.io/releases/redis-3.2.4.tar.gz'
+  version '#{node['redis']['version']'
+  download_url 'http://download.redis.io/releases/redis-#{node['redis']['version'].tar.gz'
   install_dir '/usr/local'
 end
 
@@ -22,18 +22,39 @@ redisio_configure "redis-install" do
   group 'redis'
 end
 
-service 'redismaster' do
-  action [:enable, :start]
+tar_extract 'http://repo500px.s3.amazonaws.com/roshi/roshi-#{node['roshi']['version']}.tar.gz' do
+  target_dir '/usr/local/bin'
 end
-
 
 package 'nginx' do
   action :install
 end
 
-cookbook_file "/etc/nginx/nginx.conf" do
-  source "nginx.conf"
-  mode "0644"
+cookbook_file '/etc/init/nginx.conf' do
+  source 'nginx.upstart.conf'
+  mode '0644'
+end
+
+cookbook_file '/etc/nginx/nginx.conf' do
+  source 'nginx.conf'
+  mode '0644'
+end
+
+cookbook_file '/etc/init/roshi.conf' do
+  source 'roshi.upstart.conf'
+  mode '0644'
+end
+
+file '/etc/init.d/nginx' do
+  action :delete
+end
+
+service 'redismaster' do
+  action [:enable, :start]
+end
+
+service 'roshi' do
+  action [:enable, :start]
 end
 
 service 'nginx' do
