@@ -75,4 +75,5 @@ Assistance from the following
 - parameterize the config files to allow for more robust configuration via role/environment file
 - make the download source configurable
 - optimize redis settings
+- add remote logging capabilities for redis/nginx
 
