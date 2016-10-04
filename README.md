@@ -1,18 +1,12 @@
 # roshi Cookbook
 
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+This cookbook will install Roshi, along with the associated Redis instance and nginx for proxying the connections on port 80 to roshi
 
 ## Requirements
 
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
 ### Platforms
 
-- SandwichOS
+- Ubuntu 14.04
 
 ### Chef
 
@@ -20,13 +14,12 @@ e.g.
 
 ### Cookbooks
 
-- `toaster` - roshi needs toaster to brown your bagel.
+- `redisio` - used to install Redis
+- `tar` - used to download Roshi from the repository and unpack
 
 ## Attributes
 
-TODO: List your cookbook attributes here.
 
-e.g.
 ### roshi::default
 
 <table>
@@ -37,20 +30,25 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['roshi']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['roshi']['version']</tt></td>
+    <td>String</td>
+    <td>What version of the roshi tarball to install from the repo</td>
+    <td><tt>1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['roshi']['redis']['version']</tt></td>
+    <td>String</td>
+    <td>What version of redis to download and install</td>
+    <td><tt>3.2.4</tt></td>
   </tr>
 </table>
+
+See redisio cookbook at https://github.com/brianbianco/redisio for Redisio settings.
 
 ## Usage
 
 ### roshi::default
 
-TODO: Write usage instructions for each cookbook.
-
-e.g.
 Just include `roshi` in your node's `run_list`:
 
 ```json
@@ -62,19 +60,19 @@ Just include `roshi` in your node's `run_list`:
 }
 ```
 
-## Contributing
-
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
-
 ## License and Authors
 
-Authors: TODO: List authors
+Authors: Rob Borek
+
+Assistance from the following
+- redisio, apt, and tar cookbooks
+- nginx upstart file courtesy of the nginx website
+
+## TODO
+
+- optimize nginx reverse proxy
+- determine whether roshi and redis should be blocked from access outside the host
+- parameterize the config files to allow for more robust configuration via role/environment file
+- make the download source configurable
+- optimize redis settings
 

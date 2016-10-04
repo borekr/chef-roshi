@@ -8,13 +8,13 @@
 #
 
 redisio_install "redis-installation" do
-  version '#{node['redis']['version']'
-  download_url 'http://download.redis.io/releases/redis-#{node['redis']['version'].tar.gz'
+  version '#{node['roshi']['redis']['version']'
+  download_url 'http://download.redis.io/releases/redis-#{node['roshi']['redis']['version'].tar.gz'
   install_dir '/usr/local'
 end
 
 redisio_configure "redis-install" do
-  version '3.2.4'
+  version '#{node['roshi']['redis']['version']'
   default_settings node['redisio']['default_settings']
   servers node['redisio']['servers']
   base_piddir node['redisio']['base_piddir']
